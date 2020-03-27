@@ -1,15 +1,46 @@
+var express = require('express');
 
-const startServer = async () => {
-  var express = require('express');
-  const app = express();
+var models = require("./models/models.js");
+var userController = require("./controllers/userController.js");
+var roleController = require("./controllers/roleController.js");
 
-  app.get('/', function(req, res) {
-    res.status(200).send('Hello world');
-  });
+const startServer = async () => {  
+	//Create app
+	const app = express();
 
-  app.listen({ port: 4000 }, () =>
-    console.log(`🚀 Server ready`)
-  );
+	//Create router
+	const router = require('express').Router();
+
+	//Register apis
+	app.get('/', function(req, res) {
+		res.status(200).send('Hello world');
+	});
+
+	router.route('/users')
+		.post(userController.createUser)
+		.get(userController.getAllUsers);
+
+	router.route('/users/:userId')
+		.get(userController.getOneUser)
+		.put(userController.updateUser)
+		.delete(userController.deleteUser);
+
+	router.param('userId', userController.getByIdUser);
+
+
+	router.route('/roles')
+		.get(roleController.getAllRoles);
+
+	router.route('/roles/:roleId')
+		.get(roleController.getOneRole);
+
+	router.param('roleId', roleController.getByIdRole);
+	
+	app.use('/api/v1', router);
+
+	app.listen({ port: 4000 }, () =>
+		console.log(`🚀 Server ready`)
+	);
 };
 
 startServer();
