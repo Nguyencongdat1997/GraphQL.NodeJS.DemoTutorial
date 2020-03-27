@@ -17,7 +17,16 @@
         "consumes": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
         "responses": {}
       },
       "get": {
@@ -54,6 +63,14 @@
             "name": "userId",
             "in": "path",
             "required": true
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           }
         ],
         "responses": {}
@@ -107,5 +124,31 @@
       "name": "ISC"
     },
     "description": "[Specification JSON](/api-spec)"
+  },
+
+  "definitions": {
+    "User": {
+      "type" : "object",
+      "properties": {
+        "name": {
+          "type" : "object",
+          "properties": {
+            "lastName": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            }
+          }
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "Users": {
+      "type": "array",
+      "$ref": "#/definitions/User"
+    }
   }
 }
