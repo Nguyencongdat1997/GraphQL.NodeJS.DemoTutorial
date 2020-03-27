@@ -28,22 +28,7 @@ const startServer = async () => {
 	const router = require('express').Router();
 
 	//Register apis
-	app.get('/', function(req, res) {
-		res.status(200).send('Hello world');
-	});
-	router.route('/users')
-		.post(userController.createUser)
-		.get(userController.getAllUsers);
-	router.route('/users/:userId')
-		.get(userController.getOneUser)
-		.put(userController.updateUser)
-		.delete(userController.deleteUser);
-	router.param('userId', userController.getByIdUser);
-	router.route('/roles')
-		.get(roleController.getAllRoles);
-	router.route('/roles/:roleId')
-		.get(roleController.getOneRole);
-	router.param('roleId', roleController.getByIdRole);
+	registerAPIs(app, router);		
 	
 	//Register body-parser
 	var bodyParser = require('body-parser')
@@ -57,5 +42,30 @@ const startServer = async () => {
 		console.log(`🚀 Server ready`)
 	);
 };
+
+var registerAPIs = (app, router) => {
+	app.get('/', function(req, res) {
+		res.status(200).send('Hello world');
+	});
+
+	router.route('/users')
+		.post(userController.createUser)
+		.get(userController.getAllUsers);
+
+	router.route('/users/:userId')
+		.get(userController.getOneUser)
+		.put(userController.updateUser)
+		.delete(userController.deleteUser);
+
+	router.param('userId', userController.getByIdUser);
+
+	router.route('/roles')
+		.get(roleController.getAllRoles);
+
+	router.route('/roles/:roleId')
+		.get(roleController.getOneRole);
+		
+	router.param('roleId', roleController.getByIdRole);
+}
 
 startServer();
