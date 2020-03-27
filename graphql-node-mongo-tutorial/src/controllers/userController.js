@@ -7,13 +7,14 @@ mongoose.connect('mongodb://localhost/graphql_node_mongoose_1', function (err) {
     console.log('Database successfully connected');  
   });
 
-var createUser = function (req, res, next) {
+var createUser = function (req, res, next) {  
   var user = new models.User({
     _id: new mongoose.Types.ObjectId(),
     name: {
       firstName: req.body.name.firstName,
       lastName: req.body.name.lastName,
-    }
+    },
+    role : req.body.role
   });
 
   user.save(function (err) {
@@ -26,7 +27,8 @@ var createUser = function (req, res, next) {
 };
 
 var updateUser = function (req, res, next) {
-  models.User.findByIdAndUpdate(req.body._id, req.body, {new: true}, function (err, user) {
+  var id = req.params.userId;
+  models.User.findByIdAndUpdate(id, req.body, {new: true}, function (err, user) {
     if (err) {
       next(err);
     } else {
