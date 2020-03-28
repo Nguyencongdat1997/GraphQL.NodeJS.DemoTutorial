@@ -7,6 +7,7 @@ mongoose.connect('mongodb://localhost/graphql_node_mongoose_1', function (err) {
     console.log('Database successfully connected');  
   });
 
+
 var createRole = function (req, res, next) {
   var role = new models.Role({
     _id: new mongoose.Types.ObjectId(),

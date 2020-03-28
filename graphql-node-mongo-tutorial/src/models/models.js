@@ -6,6 +6,7 @@ mongoose.connect('mongodb://localhost/graphql_node_mongoose_1', function (err) {
     console.log('Database successfully connected');  
   });
 
+
 //Define Schemas
 var roleSchema = mongoose.Schema({
     _id: { type: mongoose.SchemaTypes.ObjectId, required: true, index: true },

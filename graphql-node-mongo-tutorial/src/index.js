@@ -1,8 +1,6 @@
 var express = require('express');
+var routerRegistor = require("./routers/routerRegistor.js");
 
-var models = require("./models/models.js");
-var userController = require("./controllers/userController.js");
-var roleController = require("./controllers/roleController.js");
 
 const startServer = async () => {  
 	//Create app
@@ -28,7 +26,7 @@ const startServer = async () => {
 	const router = require('express').Router();
 
 	//Register apis
-	registerAPIs(app, router);		
+	routerRegistor.registerAPIs(app, router);		
 	
 	//Register body-parser
 	var bodyParser = require('body-parser')
@@ -42,30 +40,5 @@ const startServer = async () => {
 		console.log(`🚀 Server ready`)
 	);
 };
-
-var registerAPIs = (app, router) => {
-	app.get('/', function(req, res) {
-		res.status(200).send('Hello world');
-	});
-
-	router.route('/users')
-		.post(userController.createUser)
-		.get(userController.getAllUsers);
-
-	router.route('/users/:userId')
-		.get(userController.getOneUser)
-		.put(userController.updateUser)
-		.delete(userController.deleteUser);
-
-	router.param('userId', userController.getByIdUser);
-
-	router.route('/roles')
-		.get(roleController.getAllRoles);
-
-	router.route('/roles/:roleId')
-		.get(roleController.getOneRole);
-		
-	router.param('roleId', roleController.getByIdRole);
-}
 
 startServer();

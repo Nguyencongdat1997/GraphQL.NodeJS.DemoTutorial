@@ -7,6 +7,7 @@ mongoose.connect('mongodb://localhost/graphql_node_mongoose_1', function (err) {
     console.log('Database successfully connected');  
   });
 
+
 var createUser = function (req, res, next) {  
   var user = new models.User({
     _id: new mongoose.Types.ObjectId(),
