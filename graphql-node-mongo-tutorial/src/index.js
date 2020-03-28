@@ -1,6 +1,8 @@
 var express = require('express');
 var routerRegistor = require("./routers/routerRegistor.js");
-
+var { ApolloServer, gql } = require('apollo-server-express');
+var typeDefs = require('./schema/typeDefs.js'); 
+var resolvers  = require('./schema/resolvers.js'); 
 
 const startServer = async () => {  
 	//Create app
@@ -24,7 +26,6 @@ const startServer = async () => {
 
 	//Create router
 	const router = require('express').Router();
-
 	//Register apis
 	routerRegistor.registerAPIs(app, router);		
 	
@@ -36,9 +37,18 @@ const startServer = async () => {
 	app.use(bodyParser.urlencoded({ extended: true })); 
 
 	app.use('/api/v1', router);
+
+	//Register GraphQL
+	const server = new ApolloServer({
+	    typeDefs,
+	    resolvers
+	});
+	server.applyMiddleware({ app });
+
+	//Expose app
 	app.listen({ port: 4000 }, () =>
-		console.log(`🚀 Server ready`)
-	);
+		console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+	)
 };
 
 startServer();
