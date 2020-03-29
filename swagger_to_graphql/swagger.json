@@ -23,7 +23,7 @@
             "in": "body",
             "description": "User that we want to create",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/UserInput"
             }
           }
         ],
@@ -35,7 +35,13 @@
           "application/json"
         ],
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200" : {
+            "schema": {
+              "$ref": "#/definitions/Users"             
+            }  
+          }
+        }
       }
     },
     "/api/v1/users/{userId}": {
@@ -54,7 +60,13 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200" : {
+            "schema": {
+              "$ref": "#/definitions/User"
+            }  
+          }          
+        }
       },
       "put": {
         "summary": "/api/v1/users/{userId}",
@@ -75,7 +87,7 @@
             "in": "body",
             "description": "User with new values of properties",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/UserInput"
             }
           }
         ],
@@ -106,7 +118,13 @@
           "application/json"
         ],
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200" : {
+            "schema": {
+              "$ref": "#/definitions/Roles"
+            }  
+          }          
+        }
       }
     },
     "/api/v1/roles/{roleId}": {
@@ -125,7 +143,13 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200" : {
+            "schema": {
+              "$ref": "#/definitions/Role"
+            }  
+          }     
+        }
       }
     }
   },
@@ -139,7 +163,46 @@
   },
 
   "definitions": {
+    "Role": {
+      "type" : "object",
+      "properties": {
+        "_id" : {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "Roles": {
+      "type": "array",
+      "items" : {        
+        "$ref": "#/definitions/Role"
+      }
+    },
     "User": {
+      "type" : "object",
+      "properties": {
+        "_id" : {
+          "type": "string"
+        },
+        "name": {
+          "type" : "object",
+          "properties": {
+            "lastName": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            }
+          }
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "UserInput": {
       "type" : "object",
       "properties": {
         "name": {
@@ -160,7 +223,9 @@
     },
     "Users": {
       "type": "array",
-      "$ref": "#/definitions/User"
+      "items" : {        
+        "$ref": "#/definitions/User"
+      }
     }
   }
 }
