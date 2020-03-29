@@ -1,0 +1,41 @@
+scalar JSON
+
+type Mutation {
+  post_api_v1_users(user: UserInput): JSON!
+  put_api_v1_users_userId(userId: String!, user: UserInput): JSON!
+  delete_api_v1_users_userId(userId: String!): JSON!
+}
+
+type Query {
+  get_: JSON!
+  get_api_v1_users: [User!]!
+  get_api_v1_users_userId(userId: String!): User!
+  get_api_v1_roles: [Role!]!
+  get_api_v1_roles_roleId(roleId: String!): Role!
+}
+
+type Role {
+  _id: String
+  title: String
+}
+
+type User {
+  _id: String
+  name: User_name
+  role: String
+}
+
+type User_name {
+  lastName: String
+  firstName: String
+}
+
+input UserInput {
+  name: UserInput_nameInput
+  role: String
+}
+
+input UserInput_nameInput {
+  lastName: String
+  firstName: String
+}
