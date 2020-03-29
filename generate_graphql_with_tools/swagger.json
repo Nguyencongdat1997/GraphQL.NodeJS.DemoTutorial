@@ -1,0 +1,231 @@
+{
+  "swagger": "2.0",
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "/",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/users": {
+      "post": {
+        "summary": "/api/v1/users",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/UserInput"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "get": {
+        "summary": "/api/v1/users",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200" : {
+            "schema": {
+              "$ref": "#/definitions/Users"             
+            }  
+          }
+        }
+      }
+    },
+    "/api/v1/users/{userId}": {
+      "get": {
+        "summary": "/api/v1/users/{userId}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses": {
+          "200" : {
+            "schema": {
+              "$ref": "#/definitions/User"
+            }  
+          }          
+        }
+      },
+      "put": {
+        "summary": "/api/v1/users/{userId}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/UserInput"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "summary": "/api/v1/users/{userId}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/roles": {
+      "get": {
+        "summary": "/api/v1/roles",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200" : {
+            "schema": {
+              "$ref": "#/definitions/Roles"
+            }  
+          }          
+        }
+      }
+    },
+    "/api/v1/roles/{roleId}": {
+      "get": {
+        "summary": "/api/v1/roles/{roleId}",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        ],
+        "responses": {
+          "200" : {
+            "schema": {
+              "$ref": "#/definitions/Role"
+            }  
+          }     
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "graphql-node-mongo-tutorial",
+    "version": "1.0.0",
+    "license": {
+      "name": "ISC"
+    },
+    "description": "[Specification JSON](/api-spec)"
+  },
+
+  "definitions": {
+    "Role": {
+      "type" : "object",
+      "properties": {
+        "_id" : {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "Roles": {
+      "type": "array",
+      "items" : {        
+        "$ref": "#/definitions/Role"
+      }
+    },
+    "User": {
+      "type" : "object",
+      "properties": {
+        "_id" : {
+          "type": "string"
+        },
+        "name": {
+          "type" : "object",
+          "properties": {
+            "lastName": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            }
+          }
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "UserInput": {
+      "type" : "object",
+      "properties": {
+        "name": {
+          "type" : "object",
+          "properties": {
+            "lastName": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            }
+          }
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "Users": {
+      "type": "array",
+      "items" : {        
+        "$ref": "#/definitions/User"
+      }
+    }
+  }
+}
